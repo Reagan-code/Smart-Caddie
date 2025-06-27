@@ -1,6 +1,10 @@
 {
   "dependencies": {
+    "cors": "^2.8.5",
+    "env": "^0.0.2",
+    "express": "^5.1.0",
     "font-awesome": "^4.7.0",
+    "mongoose": "^8.16.1",
     "react-router-dom": "^7.6.2"
   }
 }
