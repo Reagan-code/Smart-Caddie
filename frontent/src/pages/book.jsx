@@ -1,19 +1,19 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import '../pagescss/search.css'
 import axios from 'axios';
 import BookInput from '../component/input';
+import '../pagescss/book.css';
 
 function Book() {
   const [caddie, bookCaddie] = useState([]);
   useEffect(() => {
-    axios.get('https://jsonplaceholder.typicode.com/posts') 
+    axios.get('') 
     .then(result => bookCaddie(result.data))
     .catch(err => console.log(err))
 }, []);
 
   return (
-    <div>
+    <div className='book-cointainer'>
         <h1>Hello</h1>
         <BookInput />
         {
@@ -22,7 +22,7 @@ function Book() {
             ) :
             caddie.map((caddie) => {
                 return (
-                    <div>
+                    <div className='book-results'>
                         {caddie.book}
                     </div>
                 )

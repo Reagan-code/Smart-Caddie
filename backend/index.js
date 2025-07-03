@@ -1,4 +1,5 @@
 const express = require("express")
+import './models/book.js'
 app = express()
 require("dotenv").config()
 app.use(express.json())

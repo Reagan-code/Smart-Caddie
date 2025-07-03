@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './styles/input.css'
 
 function BookInput() {
     const [book, bookNow] = useState('');
@@ -12,14 +13,15 @@ function BookInput() {
 
     return (
         <div>
-            <h1>Book Now</h1>
+            <h1 className='bookHeader'>Book Now</h1>
             <input
+                className='input-book'
                 type="text"
                 placeholder="Enter your name"
                 value={book}
                 onChange={(e) => bookNow(e.target.value)}
             />
-            <button onClick={handleSubmit}>Book</button>
+            <button className='btn-book' onClick={handleSubmit}>Book</button>
         </div>
     );
 }
