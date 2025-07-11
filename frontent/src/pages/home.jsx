@@ -1,8 +1,19 @@
 import React from 'react';
+import { auth} from "./firebase";
+
 
 import '../pagescss/home.css'
 function Home() {
-
+ 
+  async function caddieLogout() {
+    try {
+      await auth.signOut();
+      console.log("User logged out successfully!");
+       window.location.href = "/login";
+    } catch (error) {
+      console.error("Error logging out:");
+    }
+  }
   return (
   <>
   <div className="nav">
@@ -19,6 +30,7 @@ function Home() {
     </ul>
 
     <input type='text ' placeholder='Search Anything' className='input-search-nav'/>
+    <button className="btn btn-primary" onClick={caddieLogout}> SignOut</button>
   </div>
   <div className="welcome">
     <h1> Welcome to Smart Caddie</h1>

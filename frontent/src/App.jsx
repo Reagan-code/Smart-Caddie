@@ -1,6 +1,5 @@
-
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"; // Added Navigate import
 import Home from "./pages/home.jsx";
 import Search from "./pages/search.jsx";
 import Book from "./pages/book.jsx";
@@ -15,7 +14,7 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -26,11 +25,24 @@ function App() {
         <p>Not logged in</p>
       )}
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/book" element={<Book />} />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/"
+          element={user ? <Navigate to="/home" /> : <Navigate to="/home" />}
+        />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route 
+          path="/home" 
+          element={user ? <Home /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/search" 
+          element={user ? <Search /> : <Navigate to="/login" />} 
+        />
+        <Route 
+          path="/book" 
+          element={user ? <Book /> : <Navigate to="/login" />} 
+        />
       </Routes>
     </div>
   );

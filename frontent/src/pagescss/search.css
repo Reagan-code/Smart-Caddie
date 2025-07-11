@@ -9,7 +9,7 @@
   margin-top: 20px; 
 }
 
-input {
+.caddie-search {
   border-radius: 50px;
   border: 1px solid #ccc;
   width: 75%; 
@@ -17,7 +17,7 @@ input {
 
 }
 
-input::placeholder {
+.caddie-search::placeholder {
   color: #666;
   opacity: 0.8;
 }
@@ -43,7 +43,7 @@ input::placeholder {
   font-size: 0.95rem;
 }
 
-button {
+.btn-search {
   margin: 15px;
   padding: 10px;
   border: none;

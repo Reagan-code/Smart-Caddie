@@ -50,7 +50,8 @@ function Search() {
   return (
     <div className='cointain-caddie'>
       <div className='input-caddie'>
-           <input 
+           <input  
+           className='caddie-search'
         type='text'
         placeholder='search'
         value={search} 
@@ -72,7 +73,7 @@ function Search() {
                             <strong>Phone </strong>
           {caddieRecord.phone}
           </div>
-               <button>Book Now</button>
+               <button className='btn-search'>Book Now</button>
           </div>
         ))}
     </div>
