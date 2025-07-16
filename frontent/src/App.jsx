@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, Navigate } from "react-router-dom"; // Added Navigate import
+import { Routes, Route, Navigate } from "react-router-dom"; 
 import Home from "./pages/home.jsx";
 import Search from "./pages/search.jsx";
 import Book from "./pages/book.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
+import Admin from "./pages/admin.jsx";
 import { auth } from "./pages/firebase.js";
 
 
@@ -20,11 +21,6 @@ function App() {
 
   return (
     <div>
-      {user ? (
-        <p>Logged in as: {user.email}</p>
-      ) : (
-        <p>Not logged in</p>
-      )}
       <Routes>
         <Route
           path="/"
@@ -34,6 +30,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/book" element={<Book />} />
         <Route path="/search" element={<Search />} />
+          <Route path="/admin" element={<Admin />} />
         <Route 
           path="/home" 
           element={user ? <Home /> : <Navigate to="/login" />} 

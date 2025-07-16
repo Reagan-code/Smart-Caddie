@@ -18,33 +18,42 @@ export default function Book() {
     return unsubscribe;
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!user) {
-      alert("You must be logged in to make a booking");
-      return;
-    }
-    if (title && email && date && location) {
-      await addDoc(collection(db, "booking"), {
-        title,
-        email,
-        date,
-        location,
-        completed: false,
-        userId: user.uid,
-      });
-      setTitle("");
-      setEmail("");
-      setDate("");
-      setLocation("");
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!user) {
+    alert("You must be logged in to make a booking");
+    return;
+  }
+
+  const caddieinfo = {
+    title,
+    email,
+    date,
+    location,
+    completed: false,
+    userId: user.uid,
   };
+
+  const caddie = ["regan.oc@sirschool.org"];
+
+  await addDoc(collection(db, "booking"), caddieinfo);
+
+  if (caddie.includes(email)) {
+    await addDoc(collection(db, "Reagan"), caddieinfo);
+  }
+
+  setTitle("");
+  setEmail("");
+  setDate("");
+  setLocation("");
+};
+
 
   return (
     <div>
-      <div className="booking-cointainer">
-       {user ? <Show userId={user.uid} /> : <p>Please log in to see your bookings.</p>}
-       </div>
+      <div className="booking-container">
+        {user ? <Show userId={user.uid} /> : <p>Please log in to see your bookings.</p>}
+      </div>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Title"
@@ -73,7 +82,6 @@ export default function Book() {
         />
         <button type="submit" className="book-btn">Add Booking</button>
       </form>
-
     </div>
   );
 }

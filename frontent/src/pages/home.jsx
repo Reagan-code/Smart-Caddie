@@ -31,9 +31,7 @@ function Home() {
 </li>
 
     </ul>
-
-    <input type='text ' placeholder='Search Anything' className='input-search-nav'/>
-    <button className="btn btn-primary" onClick={caddieLogout}> SignOut</button>
+    <button className="sign-out-btn" onClick={caddieLogout}> SignOut</button>
   </div>
   <div className="welcome">
     <h1> Welcome to Smart Caddie</h1>

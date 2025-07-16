@@ -15,9 +15,13 @@ function Login() {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      if(email == "martin@gmail.com"|| email== "mickey@gmail.com" ){
+       navigate("/admin"); 
+      }else{
       console.log("User logged in successfully");
       // window.location.href = "/home";
          navigate("/home");
+      }
     } catch (error) {
       setError(error.message);
     }
