@@ -7,6 +7,7 @@ import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
 import { auth } from "./pages/firebase.js";
 
+
 function App() {
   const [user, setUser] = useState(null);
 
@@ -31,10 +32,12 @@ function App() {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/book" element={<Book />} />
         <Route 
           path="/home" 
           element={user ? <Home /> : <Navigate to="/login" />} 
         />
+  
         <Route 
           path="/search" 
           element={user ? <Search /> : <Navigate to="/login" />} 
