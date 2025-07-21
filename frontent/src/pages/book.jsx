@@ -2,6 +2,7 @@ import React from "react";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Show from "../pages/searchbook.jsx";
+import { auth } from "./firebase";
 
 export default function Book() {
   const [title, setTitle] = React.useState("");
@@ -11,6 +12,11 @@ export default function Book() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const user = auth.currentUser; 
+    if (!user) {
+      alert("You must be logged in to make a booking");
+      return;
+    }
     if (title !== "" && email !== "" && date !== "" && location !== "") {
       await addDoc(collection(db, "todos"), {
         title,
@@ -18,11 +24,13 @@ export default function Book() {
         date,
         email,
         location,
+        userId: user.uid,
       });
       setTitle("");
       setEmail("");
       setDate("");  
       setLocation("");
+      
     }
   };
 
