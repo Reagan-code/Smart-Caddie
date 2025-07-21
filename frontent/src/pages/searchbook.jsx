@@ -5,8 +5,8 @@ import { collection, query, onSnapshot, doc, deleteDoc, updateDoc } from "fireba
 export default function Show() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const space = '     '
 
-  // Fetch todos from Firebase
   useEffect(() => {
     const q = query(collection(db, "todos"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -20,24 +20,23 @@ export default function Show() {
     return () => unsubscribe();
   }, []);
 
-  // Delete todo
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "todos", id));
   };
 
-  // Toggle todo completion status
+
   const toggleComplete = async (todo) => {
     await updateDoc(doc(db, "todos", todo.id), {
       completed: !todo.completed
     });
   };
 
-  if (loading) return <div>Loading todos...</div>;
+  if (loading) return <div>Loading Booking...</div>;
 
   return (
     <div className="todo-list">
       {todos.length === 0 ? (
-        <p>No todos found. Add one above!</p>
+        <p>No booking yet </p>
       ) : (
         <ul>
           {todos.map((todo) => (
@@ -47,7 +46,10 @@ export default function Show() {
                 checked={todo.completed}
                 onChange={() => toggleComplete(todo)}
               />
-              <span>{todo.title}</span>
+              <span>{todo.title}</span> 
+              <span>{space}{todo.email}</span>
+              <span>{space}{todo.location}</span>
+              <span>{space}{todo.date}</span>
               <button onClick={() => handleDelete(todo.id)}>Delete</button>
             </li>
           ))}

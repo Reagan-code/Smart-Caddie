@@ -21,12 +21,13 @@ function Login() {
       setError(error.message);
     }
   };
+  const  invalid = "Invalid email or password";
 
   return (
     <form onSubmit={handleSubmit}>
       <h3>Login</h3>
 
-      {error && <div>{'Invalid'}</div>}
+      {error && <div>{invalid}</div>}
 
       <div>
         <label>Email address</label>
@@ -49,7 +50,6 @@ function Login() {
           required
         />
       </div>
-
       <div>
         <button type="submit">Submit</button>
       </div>
