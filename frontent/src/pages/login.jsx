@@ -26,7 +26,7 @@ function Login() {
     <form onSubmit={handleSubmit}>
       <h3>Login</h3>
 
-      {error && <div>{error}</div>}
+      {error && <div>{'Invalid'}</div>}
 
       <div>
         <label>Email address</label>

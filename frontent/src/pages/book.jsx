@@ -1,7 +1,7 @@
 import React from "react";
 import { db } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
-import Show from "./pages/searchbook.jsx";
+import Show from "../pages/searchbook.jsx";
 
 export default function Book() {
   const [title, setTitle] = React.useState("");
@@ -9,7 +9,7 @@ export default function Book() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (title !== "") {
-      await addDoc(collection(db, "todos"), {
+      await addDoc(collection(db, "bookData"), {
         title,
         completed: false,
       });
