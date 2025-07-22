@@ -1,5 +1,7 @@
 import React from 'react';
 import { auth} from "./firebase";
+import { Link } from 'react-router-dom';
+
 
 
 import '../pagescss/home.css'
@@ -18,15 +20,16 @@ function Home() {
   <>
   <div className="nav">
     <ul>
-      <li>
-        <a href="#"><Link to="/search"></Link>Home</a>
-      </li>
-      <li>
-        <a href="#">Search</a>
-      </li>
-      <li>
-        <a href="#">Booking</a>
-      </li>
+     <li>
+  <Link to="/">Home</Link>
+</li>
+<li>
+  <Link to="/search">Search</Link>
+</li>
+<li>
+  <Link to="/book">Booking</Link>
+</li>
+
     </ul>
 
     <input type='text ' placeholder='Search Anything' className='input-search-nav'/>

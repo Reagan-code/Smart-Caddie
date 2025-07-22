@@ -10,12 +10,14 @@ function Register() {
   const [lname, setLname] = useState("");
   const [error, setError] = useState("");
 
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setError("");
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered successfully");
+       navigate("/login");
     } catch (error) {
       setError(error.message);
     }
