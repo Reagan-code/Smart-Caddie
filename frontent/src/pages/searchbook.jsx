@@ -1,20 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { collection, query, onSnapshot, doc, deleteDoc, updateDoc } from "firebase/firestore";
-import { auth } from "./firebase";
+import {
+  collection,
+  query,
+  onSnapshot,
+  doc,
+  deleteDoc,
+  updateDoc,
+} from "firebase/firestore";
 
 export default function Show() {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const space = '     '
+  const space = "     ";
 
   useEffect(() => {
-      const q = query(
-      collection(db, "todos"),
-      where("userId", "==", user.uid) 
-    );
+    const q = query(collection(db, "todos"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      let todosArray = [];
+      const todosArray = [];
       querySnapshot.forEach((doc) => {
         todosArray.push({ ...doc.data(), id: doc.id });
       });
@@ -28,10 +31,9 @@ export default function Show() {
     await deleteDoc(doc(db, "todos", id));
   };
 
-
   const toggleComplete = async (todo) => {
     await updateDoc(doc(db, "todos", todo.id), {
-      completed: !todo.completed
+      completed: !todo.completed,
     });
   };
 
@@ -40,7 +42,7 @@ export default function Show() {
   return (
     <div className="todo-list">
       {todos.length === 0 ? (
-        <p>No booking yet </p>
+        <p>No booking yet</p>
       ) : (
         <ul>
           {todos.map((todo) => (
@@ -50,7 +52,7 @@ export default function Show() {
                 checked={todo.completed}
                 onChange={() => toggleComplete(todo)}
               />
-              <span>{todo.title}</span> 
+              <span>{todo.title}</span>
               <span>{space}{todo.email}</span>
               <span>{space}{todo.location}</span>
               <span>{space}{todo.date}</span>

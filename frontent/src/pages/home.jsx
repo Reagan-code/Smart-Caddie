@@ -19,7 +19,7 @@ function Home() {
   <div className="nav">
     <ul>
       <li>
-        <a href="#">Home</a>
+        <a href="#"><Link to="/search"></Link>Home</a>
       </li>
       <li>
         <a href="#">Search</a>
