@@ -4,12 +4,10 @@ import { collection, query, where, onSnapshot, doc, deleteDoc, updateDoc } from 
 
 export default function Show({ userId }) {
   const [book, setBook] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!userId) {
       setBook([]);
-      setLoading(false);
       return;
     }
 
@@ -21,39 +19,29 @@ export default function Show({ userId }) {
         items.push({ id: doc.id, ...doc.data() });
       });
       setBook(items);
-      setLoading(false);
     });
 
     return () => unsubscribe();
   }, [userId]);
 
-  const handleDelete = async (id) => {
+  const deleteCaddie = async (id) => {
     await deleteDoc(doc(db, "booking", id));
   };
 
-  const toggleComplete = async (book) => {
-    await updateDoc(doc(db, "booking", book.id), {
-      completed: !book.completed,
-    });
-  };
 
-  if (loading) return <div>Loading your bookings...</div>;
-
-  if (book.length === 0) return <div>No bookings found.</div>;
+  if (book.length === 0) return <div>You have not booked for a Caddie</div>;
 
   return (
     <ul>
       {book.map((book) => (
         <li key={book.id}>
-          <input
-            type="checkbox"
-            checked={book.completed}
-            onChange={() => toggleComplete(book)}
-          />
-          {book.title} - {book.email} - {book.location} - {book.date}
-          <button onClick={() => handleDelete(todo.id)}>Delete</button>
+          <div>{book.title}</div>
+           <div>{book.email}</div>
+             <div>{book.location}</div>
+               <div> Your booking is at{book.date}</div>
+          <button onClick={() => deleteCaddie(book.id)}>Delete</button>
         </li>
       ))}
     </ul>
   );
-}
+}         
