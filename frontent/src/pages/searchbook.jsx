@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
-import {
-  collection,
-  query,
-  onSnapshot,
-  doc,
-  deleteDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot, doc, deleteDoc, updateDoc } from "firebase/firestore";
 
-export default function Show() {
+export default function Show({ userId }) {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const space = "     ";
 
   useEffect(() => {
-    const q = query(collection(db, "todos"));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const todosArray = [];
-      querySnapshot.forEach((doc) => {
-        todosArray.push({ ...doc.data(), id: doc.id });
+    if (!userId) {
+      setTodos([]);
+      setLoading(false);
+      return;
+    }
+
+    const q = query(collection(db, "todos"), where("userId", "==", userId));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const items = [];
+      snapshot.forEach((doc) => {
+        items.push({ id: doc.id, ...doc.data() });
       });
-      setTodos(todosArray);
+      setTodos(items);
       setLoading(false);
     });
+
     return () => unsubscribe();
-  }, []);
+  }, [userId]);
 
   const handleDelete = async (id) => {
     await deleteDoc(doc(db, "todos", id));
@@ -37,30 +37,23 @@ export default function Show() {
     });
   };
 
-  if (loading) return <div>Loading Booking...</div>;
+  if (loading) return <div>Loading your bookings...</div>;
+
+  if (todos.length === 0) return <div>No bookings found.</div>;
 
   return (
-    <div className="todo-list">
-      {todos.length === 0 ? (
-        <p>No booking yet</p>
-      ) : (
-        <ul>
-          {todos.map((todo) => (
-            <li key={todo.id} className={todo.completed ? "completed" : ""}>
-              <input
-                type="checkbox"
-                checked={todo.completed}
-                onChange={() => toggleComplete(todo)}
-              />
-              <span>{todo.title}</span>
-              <span>{space}{todo.email}</span>
-              <span>{space}{todo.location}</span>
-              <span>{space}{todo.date}</span>
-              <button onClick={() => handleDelete(todo.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <ul>
+      {todos.map((todo) => (
+        <li key={todo.id}>
+          <input
+            type="checkbox"
+            checked={todo.completed}
+            onChange={() => toggleComplete(todo)}
+          />
+          {todo.title} - {todo.email} - {todo.location} - {todo.date}
+          <button onClick={() => handleDelete(todo.id)}>Delete</button>
+        </li>
+      ))}
+    </ul>
   );
 }
