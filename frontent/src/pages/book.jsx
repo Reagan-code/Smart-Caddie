@@ -24,7 +24,7 @@ export default function Book() {
       return;
     }
     if (title && email && date && location) {
-      await addDoc(collection(db, "todos"), {
+      await addDoc(collection(db, "booking"), {
         title,
         email,
         date,

@@ -3,24 +3,24 @@ import { db } from "./firebase";
 import { collection, query, where, onSnapshot, doc, deleteDoc, updateDoc } from "firebase/firestore";
 
 export default function Show({ userId }) {
-  const [todos, setTodos] = useState([]);
+  const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!userId) {
-      setTodos([]);
+      setBook([]);
       setLoading(false);
       return;
     }
 
-    const q = query(collection(db, "todos"), where("userId", "==", userId));
+    const q = query(collection(db, "booking"), where("userId", "==", userId));
 
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = [];
       snapshot.forEach((doc) => {
         items.push({ id: doc.id, ...doc.data() });
       });
-      setTodos(items);
+      setBook(items);
       setLoading(false);
     });
 
@@ -28,29 +28,29 @@ export default function Show({ userId }) {
   }, [userId]);
 
   const handleDelete = async (id) => {
-    await deleteDoc(doc(db, "todos", id));
+    await deleteDoc(doc(db, "booking", id));
   };
 
-  const toggleComplete = async (todo) => {
-    await updateDoc(doc(db, "todos", todo.id), {
-      completed: !todo.completed,
+  const toggleComplete = async (book) => {
+    await updateDoc(doc(db, "booking", book.id), {
+      completed: !book.completed,
     });
   };
 
   if (loading) return <div>Loading your bookings...</div>;
 
-  if (todos.length === 0) return <div>No bookings found.</div>;
+  if (book.length === 0) return <div>No bookings found.</div>;
 
   return (
     <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>
+      {book.map((book) => (
+        <li key={book.id}>
           <input
             type="checkbox"
-            checked={todo.completed}
-            onChange={() => toggleComplete(todo)}
+            checked={book.completed}
+            onChange={() => toggleComplete(book)}
           />
-          {todo.title} - {todo.email} - {todo.location} - {todo.date}
+          {book.title} - {book.email} - {book.location} - {book.date}
           <button onClick={() => handleDelete(todo.id)}>Delete</button>
         </li>
       ))}
