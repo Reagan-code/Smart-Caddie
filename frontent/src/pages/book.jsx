@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db, auth } from "./firebase";
 import { collection, addDoc } from "firebase/firestore";
 import Show from "../pages/searchbook.jsx";
+import "../pagescss/book.css";
 
 export default function Book() {
   const [title, setTitle] = useState("");
@@ -41,32 +42,38 @@ export default function Book() {
 
   return (
     <div>
+      <div className="booking-cointainer">
+       {user ? <Show userId={user.uid} /> : <p>Please log in to see your bookings.</p>}
+       </div>
       <form onSubmit={handleSubmit}>
         <input
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
+          className="name-input"
         />
         <input
           type="email"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          className="email-input"
         />
         <input
           type="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
+          className="date-input"
         />
         <input
           placeholder="Location"
           value={location}
           onChange={(e) => setLocation(e.target.value)}
+          className="location-input"
         />
-        <button type="submit">Add Booking</button>
+        <button type="submit" className="book-btn">Add Booking</button>
       </form>
 
-      {user ? <Show userId={user.uid} /> : <p>Please log in to see your bookings.</p>}
     </div>
   );
 }

@@ -32,16 +32,16 @@ export default function Show({ userId }) {
   if (book.length === 0) return <div>You have not booked for a Caddie</div>;
 
   return (
-    <ul>
+    <div className="booking-details">
       {book.map((book) => (
-        <li key={book.id}>
-          <div>{book.title}</div>
-           <div>{book.email}</div>
-             <div>{book.location}</div>
-               <div> Your booking is at{book.date}</div>
+        <div key={book.id}>
+          <div className="booking-id">{book.title}</div>
+           <div className="booking-id">{book.email}</div>
+             <div className="booking-id">{book.location}</div>
+               <div className="booking-id"> Your booking is at{book.date}</div>
           <button onClick={() => deleteCaddie(book.id)}>Delete</button>
-        </li>
+        </div>
       ))}
-    </ul>
+      </div>
   );
 }         

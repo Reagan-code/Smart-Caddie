@@ -1,5 +1,32 @@
-.book-cointainer{
-    margin: 20px 30px;
-    box-shadow: 2px 1px;
-    top: 0;
+.name-input, .email-input, .date-input, .location-input {
+    width: 20%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.book-btn {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.booking-id {
+    display: flex;
+    margin: 30px 50px;
+    flex-direction: column;
+    align-items: center;
+    width: 30%;
 }
