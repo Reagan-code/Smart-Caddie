@@ -2,6 +2,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "./firebase";
 import { Link } from "react-router-dom";
+import "../pagescss/auth.css";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -24,7 +25,7 @@ function Register() {
   };
 
   return (
-    <form onSubmit={handleRegister}>
+    <form onSubmit={handleRegister} className="caddie-login-form">
       <h3>Sign Up</h3>
 
       {error && <div>{error}</div>}
@@ -35,6 +36,7 @@ function Register() {
           type="text"
           placeholder="First name"
           value={fname}
+          className="fname-caddie"
           onChange={(e) => setFname(e.target.value)}
           required
         />
@@ -46,6 +48,7 @@ function Register() {
           type="text"
           placeholder="Last name"
           value={lname}
+          className="lname-caddie"
           onChange={(e) => setLname(e.target.value)}
         />
       </div>
@@ -56,6 +59,7 @@ function Register() {
           type="email"
           placeholder="Enter email"
           value={email}
+          className="email-caddie"
           onChange={(e) => setEmail(e.target.value)}
           required
         />
@@ -67,13 +71,14 @@ function Register() {
           type="password"
           placeholder="Enter password"
           value={password}
+          className="password-caddie"
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
 
       <div>
-        <button type="submit">Sign Up</button>
+        <button type="submit" className="btn-caddie-submit">Sign Up</button>
       </div>
       <p>
         Already registered? <Link to="/login">Login</Link>

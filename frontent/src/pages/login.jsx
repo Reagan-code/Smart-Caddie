@@ -2,6 +2,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "./firebase";
 import { Link, useNavigate } from "react-router-dom";
+import "../pagescss/auth.css";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -24,34 +25,36 @@ function Login() {
   const  invalid = "Invalid email or password";
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h3>Login</h3>
+    <form onSubmit={handleSubmit} className="caddie-login-form">
+      <h3 className="login-head">Login</h3>
 
-      {error && <div>{invalid}</div>}
+      {error && <div className="error-login">{invalid}</div>}
 
-      <div>
+      <div className="input-email">
         <label>Email address</label>
         <input
           type="email"
           placeholder="Enter email"
           value={email}
+          className="email-caddie"
           onChange={(e) => setEmail(e.target.value)}
           required
         />
       </div>
 
-      <div>
+      <div className="input-password">
         <label>Password</label>
         <input
           type="password"
           placeholder="Enter password"
           value={password}
+          className="password-caddie"
           onChange={(e) => setPassword(e.target.value)}
           required
         />
       </div>
       <div>
-        <button type="submit">Submit</button>
+        <button type="submit" className="btn-caddie-submit">Submit</button>
       </div>
       <p>
         New user? <Link to="/register">Register Here</Link>

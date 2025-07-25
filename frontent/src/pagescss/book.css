@@ -4,13 +4,16 @@
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    display: flex;
+    
 }
 
 .booking-container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     margin-top: 20px;
+
 }
 
 .book-btn {
@@ -23,10 +26,18 @@
     font-weight: bold;
 }
 
-.booking-id {
+.booking-info {
     display: flex;
     margin: 30px 50px;
-    flex-direction: column;
+    flex-direction:column;
     align-items: center;
     width: 30%;
+    padding: 20px 40px;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+.not-booked{
+    color: #f46363;
+    margin: 40px 20px;
+
 }
