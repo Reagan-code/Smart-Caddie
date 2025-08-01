@@ -6,20 +6,50 @@ import "../pagescss/admin.css";
 
 function ViewAdmin() {
   const [bookings, setBookings] = useState([]);
-
+  const [user, setUser] =  useState([]);
+  
+  
   useEffect(() => {
-    // Admin view: get all bookings
-    const bookingsRef = collection(db, "Reagan");
-    const unsubscribe = onSnapshot(bookingsRef, (snapshot) => {
-      const items = [];
-      snapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
-      });
-      setBookings(items);
-    });
+  let unsubscribeBookings = () => {};
+  const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+    setUser(user);
 
-    return () => unsubscribe();
-  }, []);
+    if (user) {
+      let caddieCollection;
+
+      console.log(user.email);
+
+      if (user.email === "martin@gmail.com") {
+        caddieCollection = "Reagan";
+      } else if (user.email === "regan@gmail.com") {
+        caddieCollection = "Martin";
+      } else {
+        caddieCollection = "GeneralCollection"; // fallback
+      }
+
+      const caddieRef = collection(db, caddieCollection);
+
+
+      unsubscribeBookings();
+
+      unsubscribeBookings = onSnapshot(caddieRef, (snapshot) => {
+        const items = [];
+        snapshot.forEach((doc) => {
+          items.push({ id: doc.id, ...doc.data() });
+        });
+        setBookings(items);
+      });
+    } else {
+      setBookings([]);
+      unsubscribeBookings();
+    }
+  });
+
+  return () => {
+    unsubscribeAuth();
+    unsubscribeBookings();
+  };
+}, []);
 
   const deleteBooking = async (id) => {
     const confirm = window.confirm("Are you sure you want to delete this booking?");

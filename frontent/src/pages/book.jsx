@@ -12,8 +12,8 @@ export default function Book() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((u) => {
-      setUser(u);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
     });
     return unsubscribe;
   }, []);
@@ -34,7 +34,7 @@ const handleSubmit = async (e) => {
     userId: user.uid,
   };
 
-  const caddie = ["regan.oc@sirschool.org"];
+  const caddie = ["regan.oc@sirschool.org", "mickey@gmail.com"];
 
   await addDoc(collection(db, "booking"), caddieinfo);
 
