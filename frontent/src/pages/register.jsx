@@ -4,6 +4,7 @@ import { auth } from "./firebase";
 import { Link } from "react-router-dom";
 import "../pagescss/auth.css";
 
+
 function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,7 +19,7 @@ function Register() {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       console.log("User registered successfully");
-       navigate("/login");
+       navigate("/home");
     } catch (error) {
       setError(error.message);
     }

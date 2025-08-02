@@ -17,8 +17,8 @@ function Admin() {
     <>
       <div className="nav">
         <ul>
-          <li><Link to="#">View Bookings</Link></li>
-          <li><Link to="#">View Complete</Link></li>
+          <li><Link to="#">Home</Link></li>
+          <li><Link to="/view">View Complete</Link></li>
           <li><Link to="#">Booking</Link></li>
           <li><Link to="#">Profile</Link></li>
         </ul>
@@ -49,7 +49,7 @@ function Admin() {
 
       <footer className="footer">
         <div className="footer-info">
-          <span>2025 SmartCaddie Admin Panel — All Rights Reserved</span>
+          <span>2025 SmartCaddie Admin</span>
         </div>
       </footer>
     </>

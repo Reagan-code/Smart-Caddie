@@ -19,14 +19,14 @@ function Home() {
   return (
   <>
   <div className="nav">
-    <ul>
-     <li>
+    <ul className='nav-ul'>
+     <li className='nav-li'>
   <Link to="/">Home</Link>
 </li>
-<li>
+<li  className='nav-li'>
   <Link to="/search">Search</Link>
-</li>
-<li>
+</li >
+<li  className='nav-li'>
   <Link to="/book">Booking</Link>
 </li>
 

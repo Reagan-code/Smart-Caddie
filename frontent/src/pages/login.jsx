@@ -15,6 +15,7 @@ function Login() {
     setError("");
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      console.log(email)
       if(email == "martin@gmail.com"|| email== "mickey@gmail.com" ){
        navigate("/admin"); 
       }else{

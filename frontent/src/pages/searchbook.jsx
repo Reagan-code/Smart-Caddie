@@ -33,15 +33,22 @@ export default function Show({ userId }) {
 
   return (
     <div className="booking-caddie">
-      {book.map((book) => (
-        <div key={book.id} className="booking-info">
-          {book.title}
-           {book.email}
-          {book.location}
-               Your booking is at{book.date}
-          <button onClick={() => deleteCaddie(book.id)}>Delete</button>
-        </div>
-      ))}
+
+        {book.length === 0 ? (
+          <div className="not-booked">No bookings found.</div>
+        ) : (
+          <div className="booking-caddie">
+            {book.map((booking) => (
+              <div key={booking.id} className="booking-info">
+                <p className='booking-name'><strong>Title:</strong> {booking.title}</p>
+                <p className='booking-email'><strong>Email:</strong> {booking.email}</p>
+                <p className='booking-location'><strong>Location:</strong> {booking.location}</p>
+                <p className='booking-date'><strong>Date:</strong> {booking.date}</p>
+                <button onClick={() => deleteBooking(booking.id)}>Delete</button>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
   );
 }         

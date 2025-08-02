@@ -18,36 +18,42 @@ export default function Book() {
     return unsubscribe;
   }, []);
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  if (!user) {
-    alert("You must be logged in to make a booking");
-    return;
-  }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!user) {
+      alert("You must be logged in to make a booking");
+      return;
+    }
 
-  const caddieinfo = {
-    title,
-    email,
-    date,
-    location,
-    completed: false,
-    userId: user.uid,
+    const caddieinfo = {
+      title,
+      email,
+      date,
+      location,
+      completed: false,
+      userId: user.uid,
+    };
+
+    const caddieMap = {
+      "martin@gmail.com": "Reagan",
+      "mickey@gmail.com": "Mickey",
+      "regan22@gmail.com": "Reagan22",
+      "hello@gmail.com": "hello",
+      "admin@gmail.com": "admin",
+    };
+
+    await addDoc(collection(db, "booking"), caddieinfo);
+
+    const caddieCollection = caddieMap[email];
+    if (caddieCollection) {
+      await addDoc(collection(db, caddieCollection), caddieinfo);
+    }
+
+    setTitle("");
+    setEmail("");
+    setDate("");
+    setLocation("");
   };
-
-  const caddie = ["regan.oc@sirschool.org", "mickey@gmail.com"];
-
-  await addDoc(collection(db, "booking"), caddieinfo);
-
-  if (caddie.includes(email)) {
-    await addDoc(collection(db, "Reagan"), caddieinfo);
-  }
-
-  setTitle("");
-  setEmail("");
-  setDate("");
-  setLocation("");
-};
-
 
   return (
     <div>

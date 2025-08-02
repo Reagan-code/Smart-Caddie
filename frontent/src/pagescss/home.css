@@ -5,13 +5,13 @@
   top: 0;
   position: sticky;
 }
-ul li{
+.nav-li, .nav-ul{
   display: inline;
   padding:8px;
   
   
 }
-li:hover{
+.nav-li:hover{
   background-color: greenyellow;
   border-radius:5px;
 }
