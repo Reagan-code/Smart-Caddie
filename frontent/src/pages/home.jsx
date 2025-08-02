@@ -18,21 +18,20 @@ function Home() {
   }
   return (
   <>
-  <div className="nav">
-    <ul className='nav-ul'>
-     <li className='nav-li'>
-  <Link to="/">Home</Link>
-</li>
-<li  className='nav-li'>
-  <Link to="/search">Search</Link>
-</li >
-<li  className='nav-li'>
-  <Link to="/book">Booking</Link>
-</li>
-
-    </ul>
-    <button className="sign-out-btn" onClick={caddieLogout}> SignOut</button>
-  </div>
+      <div className="nav-home">
+        <ul className='nav-ul'>
+          <li className='nav-li'>
+            <Link to="/">Home</Link>
+          </li>
+          <li className='nav-li'>
+            <Link to="/search">Search</Link>
+          </li>
+          <li className='nav-li'>
+            <Link to="/book">Booking</Link>
+          </li>
+        </ul>
+        <button className="sign-out-btn" onClick={caddieLogout}>Sign Out</button>
+      </div>
   <div className="welcome">
     <h1> Welcome to Smart Caddie</h1>
     <p>
