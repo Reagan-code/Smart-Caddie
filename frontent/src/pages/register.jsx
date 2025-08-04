@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
 import { auth } from "./firebase";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../pagescss/auth.css";
 
 
@@ -11,6 +11,7 @@ function Register() {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [error, setError] = useState("");
+      const navigate = useNavigate();
 
 
   const handleRegister = async (e) => {

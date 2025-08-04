@@ -8,14 +8,18 @@
     border: 1px solid #ccc;
 
 }
-.email-caddie, .fname-caddie, .lname-caddie {
+.email-caddie, .fname-caddie, .lname-caddie, .password-caddie {
     margin: 20px 34px;
       position: relative;
   display: inline-block;
-  width: 50%;
+  width: 100%;
   border-radius: 5px;
     padding: 10px;
     border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+
 }
 .btn-caddie-submit {
   background-color: #4CAF50;
@@ -39,9 +43,12 @@
   margin-top: 10px;
 }
 .caddie-login-form {
-  width: 700px;
+  width: 500px;
   margin: auto;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

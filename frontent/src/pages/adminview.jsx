@@ -37,6 +37,8 @@ function ViewAdmin() {
               ...doc.data(),
             }));
             setBookings(items);
+            console.log(items);
+            
           });
         }
       } else {
@@ -97,7 +99,7 @@ function ViewAdmin() {
         <h2 className="admin-booking-title">All Bookings</h2>
 
         {bookings.length === 0 ? (
-          <div className="not-booked">No bookings found.</div>
+          <div className="not-booked">No Caddie has Booked you.</div>
         ) : (
           <div className="booking-caddie">
             {bookings.map((booking) => (

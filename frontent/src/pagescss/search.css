@@ -1,7 +1,12 @@
 .cointain-caddie {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); 
-  gap: 5px;
+  width: 100vw;
+  max-width: 100%;
+  margin: 0;
+  padding: 0 0 40px 0;
+  box-sizing: border-box;
+  display: block;
+  background: #fff;
+  margin-top: 100px;
 }
 
 .input-caddie {
@@ -14,6 +19,7 @@
   border: 1px solid #ccc;
   width: 75%; 
   height: 40px;
+  margin-bottom: 30px;
 
 }
 
@@ -38,12 +44,16 @@
 
 .caddie-firstName,
 .caddie-email,
-.caddie-phone {
+.caddie-phone,
+.caddie-age {
   padding: 10px 15px;
   font-size: 0.95rem;
 }
-
-.btn-search {
+.caddie-available {
+  padding: 10px 15px;
+  font-size: 0.95rem;
+} 
+.btn-rate, .btn-book {
   margin: 15px;
   padding: 10px;
   border: none;
@@ -51,4 +61,11 @@
   background-color: #28a745;
   color: white;
   cursor: pointer;
+}
+.btn-rate{
+  background-color: #153500;
+}
+
+.table-head{
+  width: 100%;
 }

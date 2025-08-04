@@ -21,7 +21,7 @@ function Home() {
       <div className="nav-home">
         <ul className='nav-ul'>
           <li className='nav-li'>
-            <Link to="/">Home</Link>
+            <Link to="/" >Home</Link>
           </li>
           <li className='nav-li'>
             <Link to="/search">Search</Link>

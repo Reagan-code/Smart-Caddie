@@ -10,7 +10,7 @@ import ViewAdmin from "./pages/adminview.jsx";
 import { auth } from "./pages/firebase.js";
 
 
-function App() {
+function App({children}) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -33,11 +33,11 @@ function App() {
         <Route path="/book" element={<Book />} />
         <Route path="/search" element={<Search />} />
           <Route path="/admin" element={<Admin />} />
+        
         <Route 
           path="/home" 
           element={user ? <Home /> : <Navigate to="/login" />} 
         />
-  
         <Route 
           path="/search" 
           element={user ? <Search /> : <Navigate to="/login" />} 
@@ -46,6 +46,7 @@ function App() {
           path="/book" 
           element={user ? <Book /> : <Navigate to="/login" />} 
         />
+    
       </Routes>
     </div>
   );

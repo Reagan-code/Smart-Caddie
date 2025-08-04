@@ -16,7 +16,7 @@ function Login() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       console.log(email)
-      if(email == "martin@gmail.com"|| email== "mickey@gmail.com" ){
+      if(email == "martin@gmail.com"|| email== "mickey@gmail.com"  ){
        navigate("/admin"); 
       }else{
       console.log("User logged in successfully");
