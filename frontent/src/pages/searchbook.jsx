@@ -1,6 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, query, where, onSnapshot, doc, deleteDoc, updateDoc } from "firebase/firestore";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
+
+import '../pagescss/searchbook.css';
 
 export default function Show({ userId }) {
   const [book, setBook] = useState([]);
@@ -29,26 +43,48 @@ export default function Show({ userId }) {
   };
 
 
-  if (book.length === 0) return <div className="not-booked">You have not booked for a Caddie</div>;
-
   return (
-    <div className="booking-caddie">
-
-        {book.length === 0 ? (
-          <div className="not-booked">No bookings found.</div>
-        ) : (
-          <div className="booking-caddie">
-            {book.map((booking) => (
-              <div key={booking.id} className="booking-info">
-                <p className='booking-name'><strong>Title:</strong> {booking.title}</p>
-                <p className='booking-email'><strong>Email:</strong> {booking.email}</p>
-                <p className='booking-location'><strong>Location:</strong> {booking.location}</p>
-                <p className='booking-date'><strong>Date:</strong> {booking.date}</p>
-                <button onClick={() => deleteBooking(booking.id)}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+    <Box sx={{ padding: 2 }}>
+      {book.length === 0 ? (
+        <Typography variant="h6" align="center" color="textSecondary">
+          No bookings found.
+        </Typography>
+      ) : (
+        <TableContainer component={Paper} className="table-container">
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell><strong>Title</strong></TableCell>
+                <TableCell><strong>Email</strong></TableCell>
+                <TableCell><strong>Location</strong></TableCell>
+                <TableCell><strong>Date</strong></TableCell>
+                <TableCell><strong>Action</strong></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {book.map((booking) => (
+                <TableRow key={booking.id}>
+                  <TableCell>{booking.title}</TableCell>
+                  <TableCell>{booking.email}</TableCell>
+                  <TableCell>{booking.location}</TableCell>
+                  <TableCell>{booking.date}</TableCell>
+                  <TableCell>
+                    <Button
+                      variant="contained"
+                      color="error"
+                      onClick={() => deleteCaddie(booking.id)}
+                    >
+                      Delete
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
+    </Box>
   );
-}         
+  }
+
+      
