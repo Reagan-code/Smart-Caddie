@@ -2,6 +2,7 @@ import React from 'react';
 import { auth } from "./firebase";
 import { Link } from 'react-router-dom';
 import "../pagescss/admin.css"
+import NavBar from "./navbar.jsx";
 function Admin() {
   async function caddieLogout() {
     try {
@@ -15,15 +16,7 @@ function Admin() {
 
   return (
     <>
-      <div className="nav">
-        <ul>
-          <li><Link to="#">Home</Link></li>
-          <li><Link to="/view">View Complete</Link></li>
-          <li><Link to="#">Booking</Link></li>
-          <li><Link to="#">Profile</Link></li>
-        </ul>
-        <button className="sign-out-btn" onClick={caddieLogout}>Sign Out</button>
-      </div>
+     <NavBar />
       <div className="caddie-admin-header">
         <h1 className='caddie-admin-welcome'>Welcome, Admin</h1>
         <p className='caddie-admin-info'>Manage users, bookings, and caddie operations from one place.</p>

@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { auth } from "./firebase";
 import { Link, useNavigate } from "react-router-dom";
 import "../pagescss/auth.css";
-
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,8 +29,9 @@ function Login() {
   const  invalid = "Invalid email or password";
 
   return (
+    <div className="auth-body">
     <form onSubmit={handleSubmit} className="caddie-login-form">
-      <h3 className="login-head">Login</h3>
+      <h3 className="auth-head">Login</h3>
 
       {error && <div className="error-login">{invalid}</div>}
 
@@ -65,6 +65,7 @@ function Login() {
         New user? <Link to="/register">Register Here</Link>
       </p>
     </form>
+    </div>
   );
 }
 

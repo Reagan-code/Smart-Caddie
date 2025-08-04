@@ -6,6 +6,7 @@ import Book from "./pages/book.jsx";
 import Register from "./pages/register.jsx";
 import Login from "./pages/login.jsx";
 import Admin from "./pages/admin.jsx";
+import NavBar from "./pages/navbar.jsx"
 import ViewAdmin from "./pages/adminview.jsx";
 import { auth } from "./pages/firebase.js";
 
@@ -28,6 +29,7 @@ function App({children}) {
           element={user ? <Navigate to="/home" /> : <Navigate to="/home" />}
         />
         <Route path="/login" element={<Login />} />
+      <Route path="/navbar" element={<NavBar/>}/>
         <Route path="/view" element={<ViewAdmin />} />
         <Route path="/register" element={<Register />} />
         <Route path="/book" element={<Book />} />

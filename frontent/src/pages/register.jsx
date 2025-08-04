@@ -27,8 +27,9 @@ function Register() {
   };
 
   return (
+        <div className="auth-body">
     <form onSubmit={handleRegister} className="caddie-login-form">
-      <h3>Sign Up</h3>
+      <h3 className="auth-head">Sign Up</h3>
 
       {error && <div>{error}</div>}
 
@@ -86,6 +87,7 @@ function Register() {
         Already registered? <Link to="/login">Login</Link>
       </p>
     </form>
+    </div>
   );
 }
 

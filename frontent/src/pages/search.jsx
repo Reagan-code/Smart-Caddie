@@ -26,7 +26,7 @@ function Search() {
       firstName: 'Mickey',
       lastName: 'Omondi',
       email: 'mickey@gmail.com',
-      gnder: 'Male',
+      gender: 'Male',
       age: 30,
       available: false,
     },
@@ -49,8 +49,7 @@ function Search() {
     const searchTerm = search.toLowerCase();
     return (
       caddieRecord.firstName.toLowerCase().includes(searchTerm) ||
-      caddieRecord.lastName.toLowerCase().includes(searchTerm) ||
-      caddieRecord.gender.toLowerCase().includes(searchTerm)
+      caddieRecord.lastName.toLowerCase().includes(searchTerm)
     );
   });
 
