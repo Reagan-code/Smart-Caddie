@@ -13,6 +13,7 @@ import { auth } from "./pages/firebase.js";
 
 function App({children}) {
   const [user, setUser] = useState(null);
+   const [selectCaddie, setSelectCaddie] = useState(null)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -32,8 +33,14 @@ function App({children}) {
       <Route path="/navbar" element={<NavBar/>}/>
         <Route path="/view" element={<ViewAdmin />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/book" element={<Book />} />
-        <Route path="/search" element={<Search />} />
+        <Route 
+  path="/book" 
+  element={<Book selectCaddie={selectCaddie} />} 
+/>
+<Route 
+  path="/search" 
+  element={<Search setSelectCaddie={setSelectCaddie} />} 
+/>
           <Route path="/admin" element={<Admin />} />
         
         <Route 

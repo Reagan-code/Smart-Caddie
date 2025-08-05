@@ -7,9 +7,11 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import '../pagescss/search.css';
+import { useNavigate } from 'react-router-dom';
 
-function Search() {
+function Search({ setSelectCaddie }) { 
   const [search, setSearch] = useState('');
+  const navigate = useNavigate();  
 
   const caddie = [
     {
@@ -30,7 +32,7 @@ function Search() {
       gender: 'Male',
       age: 30,
       available: false,
-      rating : 4.5,
+      rating: 4.5,
     },
     {
       id: 3,
@@ -43,10 +45,16 @@ function Search() {
       rating: 4.7,
     },
   ];
+
   const sortedCaddie = [...caddie].sort((a, b) => b.rating - a.rating);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
+  };
+
+  const bookCaddie = (caddieRecord) => {
+    setSelectCaddie(caddieRecord);  
+    navigate('/book');  
   };
 
   const filteredCaddie = sortedCaddie.filter((caddieRecord) => {
@@ -79,8 +87,8 @@ function Search() {
               <TableCell>Age</TableCell>
               <TableCell>Available</TableCell>
               <TableCell>Gender</TableCell>
+              <TableCell>Rating</TableCell>
               <TableCell>Action</TableCell>
-               <TableCell>Rating</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -102,7 +110,13 @@ function Search() {
                 <TableCell>{caddieRecord.gender}</TableCell>
                 <TableCell>{caddieRecord.rating}</TableCell>
                 <TableCell>
-                  <button className="btn-book">Book Now</button>
+                  <button 
+                    className="btn-book" 
+                    onClick={() => bookCaddie(caddieRecord)}
+                    disabled={!caddieRecord.available}
+                  >
+                    {caddieRecord.available ? 'Book Now' : 'Unavailable'}
+                  </button>
                 </TableCell>
               </TableRow>
             ))}

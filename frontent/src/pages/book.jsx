@@ -4,12 +4,13 @@ import { collection, addDoc } from "firebase/firestore";
 import Show from "../pages/searchbook.jsx";
 import "../pagescss/book.css";
 
-export default function Book() {
+export default function Book({ selectCaddie }) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [email, setEmail] = useState("");
-  const [location, setLocation] = useState("");
+  const [time, setTime] = useState("");
   const [user, setUser] = useState(null);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -17,6 +18,13 @@ export default function Book() {
     });
     return unsubscribe;
   }, []);
+
+  useEffect(() => {
+    if (selectCaddie) {
+      setEmail(selectCaddie.email);
+      setTitle(`${selectCaddie.firstName} ${selectCaddie.lastName}`);
+    }
+  }, [selectCaddie]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +37,7 @@ export default function Book() {
       title,
       email,
       date,
-      location,
+      time,
       completed: false,
       userId: user.uid,
     };
@@ -52,7 +60,7 @@ export default function Book() {
     setTitle("");
     setEmail("");
     setDate("");
-    setLocation("");
+    setTime("");
   };
 
   return (
@@ -60,34 +68,45 @@ export default function Book() {
       <div className="booking-container">
         {user ? <Show userId={user.uid} /> : <p>Please log in to see your bookings.</p>}
       </div>
-      <form onSubmit={handleSubmit}>
-        <input
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          className="name-input"
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="email-input"
-        />
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="date-input"
-        />
-        <input
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className="location-input"
-        />
-        <button type="submit" className="book-btn">Add Booking</button>
-      </form>
+      <button className="hide-btn" onClick={() => setShow(!show)}>
+        {show ? 'hide' : 'book'}
+      </button>
+      {show && (
+        <form onSubmit={handleSubmit}>
+          <input
+            placeholder="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="name-input"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="email-input"
+            readOnly={!!selectCaddie} 
+          />
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="date-input"
+            required
+          />
+          <input
+            type="time"
+            placeholder="Location"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            className="location-input"
+            required
+          />
+          <button type="submit" className="book-btn">
+            Add Booking
+          </button>
+        </form>
+      )}
     </div>
   );
 }

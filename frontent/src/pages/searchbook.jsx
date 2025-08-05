@@ -44,9 +44,9 @@ export default function Show({ userId }) {
 
 
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box sx={{ padding: 2,  width:"100%"} }>
       {book.length === 0 ? (
-        <Typography variant="h6" align="center" color="textSecondary">
+        <Typography variant="h6" align="center" color="red">
           No bookings found.
         </Typography>
       ) : (
@@ -56,7 +56,7 @@ export default function Show({ userId }) {
               <TableRow>
                 <TableCell><strong>Title</strong></TableCell>
                 <TableCell><strong>Email</strong></TableCell>
-                <TableCell><strong>Location</strong></TableCell>
+                <TableCell><strong>Time</strong></TableCell>
                 <TableCell><strong>Date</strong></TableCell>
                 <TableCell><strong>Action</strong></TableCell>
               </TableRow>
@@ -66,7 +66,7 @@ export default function Show({ userId }) {
                 <TableRow key={booking.id}>
                   <TableCell>{booking.title}</TableCell>
                   <TableCell>{booking.email}</TableCell>
-                  <TableCell>{booking.location}</TableCell>
+                  <TableCell>{booking.time}</TableCell>
                   <TableCell>{booking.date}</TableCell>
                   <TableCell>
                     <Button

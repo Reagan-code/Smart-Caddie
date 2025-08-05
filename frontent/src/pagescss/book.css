@@ -41,3 +41,11 @@
     margin: 40px 20px;
 
 }
+.hide-btn{
+    border-radius: 50%;
+    color: #68dd3a;
+    border: none;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
