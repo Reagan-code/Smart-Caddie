@@ -3,6 +3,7 @@ import { auth, db } from "./firebase";
 import { Link } from 'react-router-dom';
 import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import "../pagescss/adminview.css";
+import NavBar from "./navbar"
 
 function ViewAdmin() {
   const [bookings, setBookings] = useState([]);
@@ -80,15 +81,7 @@ function ViewAdmin() {
 
   return (
     <>
-      <div className="nav">
-        <ul>
-          <li><Link to="/admin">Home</Link></li>
-          <li><Link to="/view">View Complete</Link></li>
-          <li><Link to="#">Booking</Link></li>
-          <li><Link to="#">Profile</Link></li>
-        </ul>
-        <button className="sign-out-btn" onClick={caddieLogout}>Sign Out</button>
-      </div>
+    <NavBar />
 
       <div className="caddie-admin-header">
         <h1 className="caddie-admin-welcome">Welcome, Admin</h1>
