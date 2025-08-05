@@ -20,6 +20,7 @@ function Search() {
       gender: 'Male',
       age: 25,
       available: true,
+      rating: 4.8,
     },
     {
       id: 2,
@@ -29,6 +30,7 @@ function Search() {
       gender: 'Male',
       age: 30,
       available: false,
+      rating : 4.5,
     },
     {
       id: 3,
@@ -38,14 +40,16 @@ function Search() {
       gender: 'Male',
       age: 28,
       available: true,
+      rating: 4.7,
     },
   ];
+  const sortedCaddie = [...caddie].sort((a, b) => b.rating - a.rating);
 
   const handleSearch = (e) => {
     setSearch(e.target.value);
   };
 
-  const filteredCaddie = caddie.filter((caddieRecord) => {
+  const filteredCaddie = sortedCaddie.filter((caddieRecord) => {
     const searchTerm = search.toLowerCase();
     return (
       caddieRecord.firstName.toLowerCase().includes(searchTerm) ||
@@ -76,6 +80,7 @@ function Search() {
               <TableCell>Available</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Action</TableCell>
+               <TableCell>Rating</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -95,11 +100,9 @@ function Search() {
                 <TableCell>{caddieRecord.age}</TableCell>
                 <TableCell>{caddieRecord.available ? 'Yes' : 'No'}</TableCell>
                 <TableCell>{caddieRecord.gender}</TableCell>
+                <TableCell>{caddieRecord.rating}</TableCell>
                 <TableCell>
                   <button className="btn-book">Book Now</button>
-                </TableCell>
-                  <TableCell>
-                  <button className="btn-rate">Rate Now</button>
                 </TableCell>
               </TableRow>
             ))}
