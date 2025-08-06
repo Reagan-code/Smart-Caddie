@@ -15,10 +15,10 @@ import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from 'react-router-dom';
 import { auth} from "./firebase";
 
-const pages = ['Home', 'Search', 'book'];
+const pages = ['Admin', 'View'];
 const settings = ['Profile', 'Logout'];
 
-function NavBar() {
+function AdminNav() {
 const [anchorElNav, setAnchorElNav] = React.useState(null);
 const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -172,4 +172,4 @@ const handleSettingClick = async (setting)=> {
     </AppBar>
   );
 }
-export default NavBar;
+export default AdminNav;

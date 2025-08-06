@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -7,10 +7,17 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import '../pagescss/search.css';
+import NavBar from './NavBar';
 import { useNavigate } from 'react-router-dom';
+import { db } from "./firebase";
+import { collection, query, where, onSnapshot, doc, deleteDoc, addDoc } from "firebase/firestore";
+import { auth } from "./firebase";  // Make sure auth is exported from your firebase config
+import { onAuthStateChanged } from "firebase/auth";
 
-function Search({ setSelectCaddie }) { 
+function Search({ setSelectCaddie  }) { 
   const [search, setSearch] = useState('');
+   const [rate, setRate] = useState([]);
+  const [user, setUser] = useState(null); 
   const navigate = useNavigate();  
 
   const caddie = [
@@ -31,7 +38,7 @@ function Search({ setSelectCaddie }) {
       email: 'mickey@gmail.com',
       gender: 'Male',
       age: 30,
-      available: false,
+      available: true,
       rating: 4.5,
     },
     {
@@ -64,8 +71,38 @@ function Search({ setSelectCaddie }) {
       caddieRecord.lastName.toLowerCase().includes(searchTerm)
     );
   });
+    useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user.uid); 
+      } else {
+        setUser(null);  
+      }
+    });
+    return () => unsubscribe();  
+  }, []);
+useEffect(() => {
+  if (!user) return;
 
+  const q = query(collection(db, "ratings"), where("userId", "==", user));
+  const unsubscribe = onSnapshot(q, (snapshot) => {
+    const items = [];
+    snapshot.forEach((doc) => {
+      items.push({ id: doc.id, ...doc.data() });
+    });
+    console.log(items);
+    
+    setRate(items); 
+   
+  });
+
+  return () => unsubscribe();
+}, [user]);
+  console.log("Querying ratings for userId:", user);
+console.log(rate)
   return (
+    <>
+    <NavBar/>
     <div className="cointain-caddie">
       <div className="input-caddie">
         <input
@@ -88,7 +125,7 @@ function Search({ setSelectCaddie }) {
               <TableCell>Available</TableCell>
               <TableCell>Gender</TableCell>
               <TableCell>Rating</TableCell>
-              <TableCell>Action</TableCell>
+              <TableCell>UpdateRating</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -109,6 +146,7 @@ function Search({ setSelectCaddie }) {
                 <TableCell>{caddieRecord.available ? 'Yes' : 'No'}</TableCell>
                 <TableCell>{caddieRecord.gender}</TableCell>
                 <TableCell>{caddieRecord.rating}</TableCell>
+                            
                 <TableCell>
                   <button 
                     className="btn-book" 
@@ -121,9 +159,16 @@ function Search({ setSelectCaddie }) {
               </TableRow>
             ))}
           </TableBody>
+          {rate && rate.length > 0 && (
+  <TableRow key={rate[0].id}>
+    <TableCell>{rate[0].rating}</TableCell>
+    <TableCell>{rate[0].time}</TableCell>
+  </TableRow>
+)}
         </Table>
       </TableContainer>
     </div>
+    </>
   );
 }
 

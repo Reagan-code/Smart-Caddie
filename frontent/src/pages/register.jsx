@@ -18,8 +18,12 @@ function Register() {
     e.preventDefault();
     setError("");
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      console.log("User registered successfully");
+   const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+const user = userCredential.user;
+
+await updateProfile(user, {
+  displayName: `${fname} ${lname}`,
+      })
        navigate("/home");
     } catch (error) {
       setError(error.message);

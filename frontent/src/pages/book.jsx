@@ -38,6 +38,7 @@ export default function Book({ selectCaddie }) {
       email,
       date,
       time,
+      status:'pending',
       completed: false,
       userId: user.uid,
     };

@@ -3,7 +3,19 @@ import { auth, db } from "./firebase";
 import { Link } from 'react-router-dom';
 import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
 import "../pagescss/adminview.css";
-import NavBar from "./navbar"
+import AdminNav from "./navadmin.jsx";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  Typography,
+  Box,
+} from "@mui/material";
 
 function ViewAdmin() {
   const [bookings, setBookings] = useState([]);
@@ -15,10 +27,9 @@ function ViewAdmin() {
 
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
       setUser(user);
-      console.log(user.email)
+      console.log(user.email);
 
       if (user) {
-
         const collectionMap = {
           "martin@gmail.com": "Reagan",
           "mickey@gmail.com": "Mickey",
@@ -28,7 +39,7 @@ function ViewAdmin() {
         const collectionName = collectionMap[user.email];
         setCaddieCollection(collectionName);
 
-        if (unsubscribeBookings) unsubscribeBookings(); 
+        if (unsubscribeBookings) unsubscribeBookings();
 
         if (collectionName) {
           const caddieRef = collection(db, collectionName);
@@ -39,7 +50,6 @@ function ViewAdmin() {
             }));
             setBookings(items);
             console.log(items);
-            
           });
         }
       } else {
@@ -81,7 +91,7 @@ function ViewAdmin() {
 
   return (
     <>
-    <NavBar />
+      <AdminNav />
 
       <div className="caddie-admin-header">
         <h1 className="caddie-admin-welcome">Welcome, Admin</h1>
@@ -91,21 +101,46 @@ function ViewAdmin() {
       <div className="admin-booking-section">
         <h2 className="admin-booking-title">All Bookings</h2>
 
-        {bookings.length === 0 ? (
-          <div className="not-booked">No Caddie has Booked you.</div>
-        ) : (
-          <div className="booking-caddie">
-            {bookings.map((booking) => (
-              <div key={booking.id} className="booking-info-admin">
-                <p className='booking-name'><strong>Title:</strong> {booking.title}</p>
-                <p className='booking-email'><strong>Email:</strong> {booking.email}</p>
-                <p className='booking-location'><strong>Location:</strong> {booking.location}</p>
-                <p className='booking-date'><strong>Date:</strong> {booking.date}</p>
-                <button onClick={() => deleteBooking(booking.id)}>Delete</button>
-              </div>
-            ))}
-          </div>
-        )}
+        <Box sx={{ padding: 2, width: "100%" }}>
+          {bookings.length === 0 ? (
+            <Typography variant="h6" align="center" color="red">
+              No bookings found.
+            </Typography>
+          ) : (
+            <TableContainer component={Paper} className="table-container">
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell><strong>Title</strong></TableCell>
+                    <TableCell><strong>Email</strong></TableCell>
+                    <TableCell><strong>Time</strong></TableCell>
+                    <TableCell><strong>Date</strong></TableCell>
+                    <TableCell><strong>Action</strong></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {bookings.map((booking) => (
+                    <TableRow key={booking.id}>
+                      <TableCell>{booking.title}</TableCell>
+                      <TableCell>{booking.email}</TableCell>
+                      <TableCell>{booking.time}</TableCell>
+                      <TableCell>{booking.date}</TableCell>
+                      <TableCell>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          onClick={() => deleteBooking(booking.id)}
+                        >
+                          Delete
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+        </Box>
       </div>
     </>
   );
