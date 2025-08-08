@@ -64,9 +64,9 @@ function Admin() {
     }
   }
 
-  const confirmedCount = book.filter(item => item.status === "confirmed").length;
+  const confirmedCount = bookings.filter(item => item.status === "confirmed").length;
   const pendingCount = bookings.filter(item => item.status === "pending").length;
-  const completedCount = book.filter(item => item.status === "completed").length;
+  const completedCount = bookings.filter(item => item.status === "completed").length;
 
   return (
     <>

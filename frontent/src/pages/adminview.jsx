@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from "./firebase";
 import { Link } from 'react-router-dom';
-import { collection, onSnapshot, doc, deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot, doc, deleteDoc,updateDoc  } from "firebase/firestore";
 import "../pagescss/adminview.css";
 import AdminNav from "./navadmin.jsx";
 import {
@@ -78,6 +78,17 @@ function ViewAdmin() {
       }
     }
   };
+  const updateBookingStatus = async (id) => {
+  if (!caddieCollection) return;
+
+  try {
+    const bookingRef = doc(db, caddieCollection, id);
+    await updateDoc(bookingRef, { status: "confirmed" });
+    console.log("Booking status updated to confirmed:", id);
+  } catch (error) {
+    console.error("Error updating booking status:", error);
+  }
+};
 
   const caddieLogout = async () => {
     try {
@@ -134,6 +145,16 @@ function ViewAdmin() {
                           Delete
                         </Button>
                       </TableCell>
+                            <TableCell>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => updateBookingStatus(booking.id)}
+          disabled={booking.status === "confirmed"}
+        >
+          Confirm
+        </Button>
+      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
