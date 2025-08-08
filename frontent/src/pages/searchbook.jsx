@@ -43,7 +43,7 @@ export default function Show({ userId }) {
   const deleteCaddie = async (id) => {
     await deleteDoc(doc(db, "booking", id));
   };
-
+ //Rating function
   const rateMap = {
     "martin@gmail.com": "Reagan",
     "mickey@gmail.com": "Mickey",
@@ -91,6 +91,7 @@ export default function Show({ userId }) {
     }
   };
 
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', width: '100%' }}>
       <NavBar />
@@ -110,6 +111,7 @@ export default function Show({ userId }) {
                   <TableCell><strong>Date</strong></TableCell>
                   <TableCell><strong>Status</strong></TableCell>
                   <TableCell><strong>Actions</strong></TableCell>
+                   <TableCell><strong>Rate</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -120,8 +122,7 @@ export default function Show({ userId }) {
                     <TableCell>{booking.time}</TableCell>
                     <TableCell>{booking.date}</TableCell>
                     <TableCell>
-                      {booking.status} ({book.filter(b => b.status === booking.status).length})
-                    </TableCell>
+                      {booking.status}                 </TableCell>
                     <TableCell sx={{ display: 'flex', gap: 1 }}>
                       <Button
                         variant="contained"
@@ -130,6 +131,8 @@ export default function Show({ userId }) {
                       >
                         Delete
                       </Button>
+                    </TableCell>
+                    <TableCell>
                       <Button
                         variant="contained"
                         color="primary"

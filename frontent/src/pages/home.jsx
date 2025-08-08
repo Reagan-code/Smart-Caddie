@@ -55,8 +55,12 @@ const Home = () => {
   return (
     <>
       <NavBar />
+      <div className="welcome-header">
+        <h1>Welcome to SmartCaddie</h1>
+        <p>You can book a caddie</p>
+      </div>
       <div className="dashboard">
-        <h1 className="dashboard-title">Smart Caddie Dashboard</h1>
+        <h1 className="dashboard-title">Your Current Stats</h1>
 
         <div className="booking-summary">
           <div className="summary-card confirmed">

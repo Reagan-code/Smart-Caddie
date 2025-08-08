@@ -32,15 +32,15 @@
 }
 
 .summary-card.confirmed {
-  border-color: #1cc88a;
+  border-color: #36cc72;
 }
 
 .summary-card.pending {
-  border-color: #f6c23e;
+  border-color: #36cc72;
 }
 
 .summary-card.completed {
-  border-color: #36b9cc;
+  border-color: #36cc72;
 }
 
 .summary-card h2 {
@@ -105,25 +105,29 @@
   opacity: 0.9;
 }
 
-/* 📅 Calendar Section */
-.calendar-section {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.05);
-}
 
-.calendar-section h2 {
-  margin-bottom: 1rem;
-}
 
-.calendar-placeholder {
-  padding: 2rem;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
+.welcome-header {
   text-align: center;
-  font-style: italic;
-  color: #888;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #88cc97, #3eca5c);
+  color: white;
+  border-radius: 12px;
+  margin-top: 20px;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.welcome-header h1 {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: 0.5rem;
+}
+
+.welcome-header p {
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  opacity: 0.9;
 }
 

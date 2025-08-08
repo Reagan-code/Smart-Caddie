@@ -135,7 +135,9 @@ const updateBookingStatus = async (id) => {
                     <TableCell><strong>Email</strong></TableCell>
                     <TableCell><strong>Time</strong></TableCell>
                     <TableCell><strong>Date</strong></TableCell>
+                    <TableCell><strong>Status</strong></TableCell>
                     <TableCell><strong>Action</strong></TableCell>
+                    <TableCell><strong>Confirmation</strong></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -145,6 +147,7 @@ const updateBookingStatus = async (id) => {
                       <TableCell>{booking.email}</TableCell>
                       <TableCell>{booking.time}</TableCell>
                       <TableCell>{booking.date}</TableCell>
+                       <TableCell>{booking.status}</TableCell>
                       <TableCell>
                         <Button
                           variant="contained"

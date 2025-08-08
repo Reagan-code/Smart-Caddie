@@ -14,9 +14,10 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from 'react-router-dom';
 import { auth} from "./firebase";
+import SmartCaddieLogo from '../assets/SmartCaddie.png';
 
 const pages = ['Home', 'Search', 'book'];
-const settings = ['Profile', 'Logout'];
+const settings = ['Logout'];
 
 function NavBar() {
 const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -50,10 +51,14 @@ const handleSettingClick = async (setting)=> {
   }
 }
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: '#12512aff' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <img 
+    src={SmartCaddieLogo} 
+  style={{ height: '60px', marginRight: '10px' , borderRadius: '50%'}} 
+/>
+          {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}
           <Typography
             variant="h6"
             noWrap
@@ -62,14 +67,14 @@ const handleSettingClick = async (setting)=> {
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
+              fontFamily: 'Poppins, sans-serif',
               fontWeight: 700,
               letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            LOGO
+            SmartCaddie
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -106,7 +111,7 @@ const handleSettingClick = async (setting)=> {
               ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          {/* <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} /> */}
           <Typography
             variant="h5"
             noWrap
@@ -123,7 +128,7 @@ const handleSettingClick = async (setting)=> {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            SmartCaddie
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
