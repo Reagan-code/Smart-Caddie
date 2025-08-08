@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from "./firebase";
 import { Link } from 'react-router-dom';
-import { collection, onSnapshot, doc, deleteDoc,updateDoc  } from "firebase/firestore";
+import { collection, onSnapshot, doc, deleteDoc,updateDoc, getDoc,query,getDocs,where } from "firebase/firestore";
 import "../pagescss/adminview.css";
 import AdminNav from "./navadmin.jsx";
 import {
@@ -64,6 +64,12 @@ function ViewAdmin() {
       if (unsubscribeBookings) unsubscribeBookings();
     };
   }, []);
+  
+
+
+
+
+
 
   const deleteBooking = async (id) => {
     if (!caddieCollection) return;
@@ -78,27 +84,30 @@ function ViewAdmin() {
       }
     }
   };
-  const updateBookingStatus = async (id) => {
+  
+const updateBookingStatus = async (id) => {
   if (!caddieCollection) return;
 
   try {
+
     const bookingRef = doc(db, caddieCollection, id);
     await updateDoc(bookingRef, { status: "confirmed" });
-    console.log("Booking status updated to confirmed:", id);
+
+ 
+    const bookingSnap = await getDoc(bookingRef);
+    if (!bookingSnap.exists()) return;
+
+    const { userBookingId } = bookingSnap.data();
+
+   const userBookingRef = doc(db, "booking", userBookingId);
+    await updateDoc(userBookingRef, { status: 'confirmed' });
+
+    console.log(`Booking ${id} confirmed for caddie and user`);
   } catch (error) {
     console.error("Error updating booking status:", error);
   }
 };
 
-  const caddieLogout = async () => {
-    try {
-      await auth.signOut();
-      console.log("User logged out successfully!");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  };
 
   return (
     <>

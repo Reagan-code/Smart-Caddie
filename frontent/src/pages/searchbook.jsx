@@ -20,7 +20,7 @@ import '../pagescss/searchbook.css';
 export default function Show({ userId }) {
   const [book, setBook] = useState([]);
   const [rate, setRate] = useState("");
-  const [ratingBookingId, setRatingBookingId] = useState(null);
+  const [ratingBookingId, setRatingBookingId] = useState(null); 
 
   useEffect(() => {
     if (!userId) {
@@ -31,23 +31,39 @@ export default function Show({ userId }) {
     const q = query(collection(db, "booking"), where("userId", "==", userId));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const items = [];
-      snapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
+      snapshot.forEach((docSnap) => {
+        items.push({ id: docSnap.id, ...docSnap.data() });
       });
       setBook(items);
     });
 
     return () => unsubscribe();
   }, [userId]);
-    console.log("Querying ratings for userId:", userId);
 
   const deleteCaddie = async (id) => {
     await deleteDoc(doc(db, "booking", id));
   };
 
+  const rateMap = {
+    "martin@gmail.com": "Reagan",
+    "mickey@gmail.com": "Mickey",
+    "seabstian@gmail.com": "Reagan22",
+    "hello@gmail.com": "hello",
+    "admin@gmail.com": "admin",
+  };
+
   const rateCaddie = async (bookingId) => {
+    const booking = book.find(b => b.id === bookingId);
+    if (!booking) return;
+
+    const rateCollect = rateMap[booking.email];
+    if (!rateCollect) {
+      alert("No matching caddie found for this booking");
+      return;
+    }
+
     try {
-      if (!rate || isNaN(rate)){
+      if (!rate || isNaN(rate)) {
         alert("Please enter a valid rating between 1-5");
         return;
       }
@@ -59,10 +75,11 @@ export default function Show({ userId }) {
       }
 
       await addDoc(collection(db, "ratings"), {
-        bookingId,
-        rating:ratingValue ,
-        userId, 
-        createdAt: new Date(),
+        rating: ratingValue,
+        email: booking.email,
+        caddieCollection: rateCollect,
+        userId: booking.userId,
+        bookingId: booking.id
       });
 
       alert("Rating submitted successfully!");
@@ -128,7 +145,6 @@ export default function Show({ userId }) {
           </TableContainer>
         )}
 
-    
         {ratingBookingId && (
           <Box sx={{
             position: 'fixed',

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { collection, query, where, onSnapshot, doc, deleteDoc, updateDoc } from "firebase/firestore";
 import NavBar from "./NavBar";
-import { auth } from "./firebase";  // Make sure auth is exported from your firebase config
+import { auth } from "./firebase";  
 import { onAuthStateChanged } from "firebase/auth";
 import "../pagescss/home.css";
 
