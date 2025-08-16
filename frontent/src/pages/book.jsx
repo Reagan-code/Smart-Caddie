@@ -56,7 +56,6 @@ export default function Book({ selectCaddie, userId }) {
 
   }, [user]);
 
-  // check auth
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       console.log('Auth state changed:', user ? user.uid : 'No user');
@@ -65,7 +64,6 @@ export default function Book({ selectCaddie, userId }) {
     return unsubscribe;
   }, []);
 
-  // prefill booking form if caddie selected
   useEffect(() => {
     if (selectCaddie) {
       setEmail(selectCaddie.email);
@@ -90,7 +88,7 @@ export default function Book({ selectCaddie, userId }) {
       return;
     }
 
-    // save booking for current user
+
     const userBookingRef = await addDoc(collection(db, "booking"), {
       title,
       email,

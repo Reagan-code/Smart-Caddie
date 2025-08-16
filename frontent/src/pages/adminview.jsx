@@ -89,20 +89,41 @@ const updateBookingStatus = async (id) => {
   if (!caddieCollection) return;
 
   try {
-
+    console.log("Confirming booking ID:", id, "in collection:", caddieCollection);
+    
     const bookingRef = doc(db, caddieCollection, id);
     await updateDoc(bookingRef, { status: "confirmed" });
 
- 
     const bookingSnap = await getDoc(bookingRef);
-    if (!bookingSnap.exists()) return;
+    if (!bookingSnap.exists()) {
+      console.error("Booking document not found after update");
+      return;
+    }
 
-    const { userBookingId } = bookingSnap.data();
+    const bookingData = bookingSnap.data();
+    console.log("Caddie booking data:", bookingData);
+    
+    const { userBookingId, userId } = bookingData;
 
-   const userBookingRef = doc(db, "booking", userBookingId);
-    await updateDoc(userBookingRef, { status: 'confirmed' });
+    if (!userBookingId) {
+      console.error("No userBookingId found in booking data:", bookingData);
+      return;
+    }
 
-    console.log(`Booking ${id} confirmed for caddie and user`);
+    if (!userId) {
+      console.error("No userId found in booking data:", bookingData);
+      return;
+    }
+
+    console.log("Updating user booking:", userBookingId, "for userId:", userId);
+    
+    const userBookingRef = doc(db, "booking", userBookingId);
+    await updateDoc(userBookingRef, { 
+      status: 'confirmed',
+      userId: userId 
+    });
+
+    console.log(`Booking ${id} confirmed for caddie and user. UserBookingId: ${userBookingId}, UserId: ${userId}`);
   } catch (error) {
     console.error("Error updating booking status:", error);
   }
@@ -136,6 +157,7 @@ const updateBookingStatus = async (id) => {
                     <TableCell><strong>Time</strong></TableCell>
                     <TableCell><strong>Date</strong></TableCell>
                     <TableCell><strong>Status</strong></TableCell>
+                    <TableCell><strong>Booked By</strong></TableCell>
                     <TableCell><strong>Action</strong></TableCell>
                     <TableCell><strong>Confirmation</strong></TableCell>
                   </TableRow>
@@ -148,8 +170,8 @@ const updateBookingStatus = async (id) => {
                       <TableCell>{booking.time}</TableCell>
                       <TableCell>{booking.date}</TableCell>
                        <TableCell>{booking.status}</TableCell>
-                       <TableCell>{booking.logUserFirstName}</TableCell>
-                       <TableCell>{booking.logUserLastName}</TableCell>
+                       <TableCell>{`${booking.logUserFirstName} ${booking.logUserLastName}`}</TableCell>
+              
                       <TableCell>
                         <Button
                           variant="contained"

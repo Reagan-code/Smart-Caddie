@@ -54,15 +54,6 @@ function Admin() {
     };
   }, []);
 
-  async function caddieLogout() {
-    try {
-      await auth.signOut();
-      console.log("User logged out successfully!");
-      window.location.href = "/login";
-    } catch (error) {
-      console.error("Error logging out:", error);
-    }
-  }
 
   const confirmedCount = bookings.filter(item => item.status === "confirmed").length;
   const pendingCount = bookings.filter(item => item.status === "pending").length;

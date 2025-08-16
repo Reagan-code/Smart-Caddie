@@ -72,7 +72,7 @@ function Search({ setSelectCaddie }) {
     return () => unsubscribe();  
   }, []);
 
-  // Combined filtering logic with ratings
+
   const filterCaddies = (caddieData, ratings) => {
     return caddieData.filter(caddie => {
       const matchesSearch = search === '' || 
@@ -87,18 +87,23 @@ function Search({ setSelectCaddie }) {
       
       return matchesSearch && matchesGender && matchesAvailability;
     }).map(caddie => {
+      
       const caddieRatings = ratings.filter(rating => rating.caddieEmail === caddie.email);
       if (caddieRatings.length > 0) {
-        const avgRating = caddieRatings.reduce((sum, rating) => sum + rating.rating, 0) / caddieRatings.length;
-        return { ...caddie, rating: avgRating, reviewCount: caddieRatings.length };
+        const avgRating = caddieRatings.reduce((sum, rating) => sum + Number(rating.rating), 0) / caddieRatings.length;
+        return { 
+          ...caddie, 
+          rating: parseFloat(avgRating.toFixed(1)), 
+          reviewCount: caddieRatings.length,
+          hasRatings: true
+        };
       }
-      return caddie;
+      return { ...caddie, rating: null, reviewCount: 0, hasRatings: false };
     });
   };
 
   useEffect(() => {
     if (!user) {
-      // If no user, just filter without ratings
       setFilteredCaddies(filterCaddies(caddieList, []));
       return;
     }
@@ -126,11 +131,23 @@ function Search({ setSelectCaddie }) {
   }, [search, genderFilter, availabilityFilter]);
 
   const getCaddieRating = (caddieEmail) => {
-    const caddieRatings = rate.filter(rating => rating.caddieEmail === caddieEmail);
+    console.log("Getting rating for caddie:", caddieEmail);
+    console.log("Available ratings:", rate);
+    
+    const caddieRatings = rate.filter(rating => {
+      console.log("Checking rating:", rating, "against email:", caddieEmail);
+      return rating.caddieEmail === caddieEmail;
+    });
+    
+    console.log("Found ratings for", caddieEmail, ":", caddieRatings);
+    
     if (caddieRatings.length === 0) return null;
     
-    const totalRating = caddieRatings.reduce((sum, rating) => sum + rating.rating, 0);
-    return (totalRating / caddieRatings.length).toFixed(1);
+    const totalRating = caddieRatings.reduce((sum, rating) => sum + Number(rating.rating), 0);
+    const avgRating = (totalRating / caddieRatings.length).toFixed(1);
+    
+    console.log("Calculated average rating:", avgRating);
+    return avgRating;
   };
 
   const handleBook = (caddie) => {
@@ -266,7 +283,6 @@ function Search({ setSelectCaddie }) {
         ) : (
           <Grid container spacing={{ xs: 2, sm: 3 }}>
             {filteredCaddies.map((caddie) => {
-              const rating = getCaddieRating(caddie.email);
               return (
                 <Grid item xs={12} sm={6} lg={4} key={caddie.id}>
                   <Card 
@@ -379,11 +395,11 @@ function Search({ setSelectCaddie }) {
                       </Box>
 
                       {/* Rating */}
-                      {rating ? (
+                      {caddie.hasRatings && caddie.rating ? (
                         <Box display="flex" alignItems="center" mb={2}>
-                          <Rating value={parseFloat(rating)} readOnly size="small" />
+                          <Rating value={caddie.rating} readOnly size="small" />
                           <Typography variant="body2" sx={{ ml: 1 }}>
-                            {rating}/5 ({caddie.reviewCount || 0} reviews)
+                            {caddie.rating}/5 ({caddie.reviewCount} reviews)
                           </Typography>
                         </Box>
                       ) : (
