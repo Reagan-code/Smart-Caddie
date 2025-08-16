@@ -148,6 +148,8 @@ const updateBookingStatus = async (id) => {
                       <TableCell>{booking.time}</TableCell>
                       <TableCell>{booking.date}</TableCell>
                        <TableCell>{booking.status}</TableCell>
+                       <TableCell>{booking.logUserFirstName}</TableCell>
+                       <TableCell>{booking.logUserLastName}</TableCell>
                       <TableCell>
                         <Button
                           variant="contained"

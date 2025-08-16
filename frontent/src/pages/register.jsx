@@ -1,9 +1,10 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import React, { useState } from "react";
-import { auth } from "./firebase";
+import { auth, db } from "./firebase";
 import { Link, useNavigate } from "react-router-dom";
 import "../pagescss/auth.css";
-
+import { setDoc, doc } from "firebase/firestore";
+import { updateProfile } from "firebase/auth";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -20,6 +21,13 @@ function Register() {
     try {
    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 const user = userCredential.user;
+  await setDoc(doc(db, "users", user.uid), {
+  uid: user.uid,
+  firstName: fname,
+  lastName: lname,
+  email: email,
+  createdAt: new Date(),
+});
 
 await updateProfile(user, {
   displayName: `${fname} ${lname}`,

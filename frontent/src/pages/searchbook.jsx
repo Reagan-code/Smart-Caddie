@@ -21,15 +21,17 @@ export default function Show({ userId }) {
   const [book, setBook] = useState([]);
   const [rate, setRate] = useState("");
   const [ratingBookingId, setRatingBookingId] = useState(null); 
-
+  const [user, setUser] = useState([]);
   useEffect(() => {
     if (!userId) {
       setBook([]);
+      setUser([]);
       return;
     }
 
+    // Fetch bookings
     const q = query(collection(db, "booking"), where("userId", "==", userId));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+    const unsubscribeBookings = onSnapshot(q, (snapshot) => {
       const items = [];
       snapshot.forEach((docSnap) => {
         items.push({ id: docSnap.id, ...docSnap.data() });
@@ -37,9 +39,23 @@ export default function Show({ userId }) {
       setBook(items);
     });
 
-    return () => unsubscribe();
-  }, [userId]);
+    // Fetch user
+    const l = query(collection(db, "users"), where("uid", "==", userId)); 
+    // 🔑 use "uid" not "userId" because in Register.js you stored "uid"
+    const unsubscribeUser = onSnapshot(l, (snapshot) => {
+      let userData = null;
+      snapshot.forEach((docSnap) => {
+        userData = { id: docSnap.id, ...docSnap.data() };
+      });
+      setUser(userData); // save as object, not array
+    });
 
+    // Cleanup both listeners
+    return () => {
+      unsubscribeBookings();
+      unsubscribeUser();
+    };
+  }, [userId]);
   const deleteCaddie = async (id) => {
     await deleteDoc(doc(db, "booking", id));
   };
@@ -110,7 +126,8 @@ export default function Show({ userId }) {
                   <TableCell><strong>Time</strong></TableCell>
                   <TableCell><strong>Date</strong></TableCell>
                   <TableCell><strong>Status</strong></TableCell>
-                  <TableCell><strong>Actions</strong></TableCell>
+                   <TableCell><strong>Name</strong></TableCell>
+                   <TableCell><strong>Actions</strong></TableCell>
                    <TableCell><strong>Rate</strong></TableCell>
                 </TableRow>
               </TableHead>
@@ -121,8 +138,12 @@ export default function Show({ userId }) {
                     <TableCell>{booking.email}</TableCell>
                     <TableCell>{booking.time}</TableCell>
                     <TableCell>{booking.date}</TableCell>
+                    <TableCell>{booking.status}</TableCell>
                     <TableCell>
-                      {booking.status}                 </TableCell>
+  {user ? `${user.firstName} ${user.lastName}` : "Loading..."}
+</TableCell>
+
+                 
                     <TableCell sx={{ display: 'flex', gap: 1 }}>
                       <Button
                         variant="contained"
